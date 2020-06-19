@@ -1,7 +1,7 @@
 # Jogo2D
 Primeiro jogo para disciplina de computação gráfica.
 
-Jogo implementado em python para a disciplina de computação gráfica.
+Jogo implementado em python utilizando a biblioteca pygame.
 
 Este jogo foi baseado em jogos de carro de mini game onde se deve desviar dos obstaculos da pista.
 
