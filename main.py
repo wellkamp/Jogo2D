@@ -7,6 +7,15 @@ from Carro import Carro
 
 pygame.init()
 
+# Sons
+pygame.mixer.init()
+pygame.mixer.music.load('assets/sounds/backwav.wav')
+pygame.mixer.music.play()
+curve = pygame.mixer.Sound('assets/sounds/curve.wav')
+collisionSound = pygame.mixer.Sound('assets/sounds/Collision.wav')
+starSound = pygame.mixer.Sound('assets/sounds/star.wav')
+
+# BackGround
 window = pygame.display.set_mode([1280, 720])
 title = pygame.display.set_caption('Jogo de carro Wellington')
 bg = pygame.image.load('assets/forest.png')
@@ -32,7 +41,6 @@ valor4 = carro_pista3.getY()
 valor3 = star.getY()
 valor5 = banana.getY()
 movimentoX = carro_player.getX()
-# movimentoY = carro_player.getY()
 score = 0
 jogando = True
 
@@ -70,6 +78,7 @@ def fases(valor):
 
 
 def crash():
+    collisionSound.play()
     font_default = pygame.font.get_default_font()
     font_size = pygame.font.SysFont(font_default, 60, True)
     font_text = 'Game Over! Sua pontuação: {}'.format(str(score))
@@ -77,7 +86,6 @@ def crash():
     window.blit(font_render, (300, 300))
     while True:
         for event in pygame.event.get():
-            # print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -111,12 +119,12 @@ def collision():
 
     if star_colide:
         score += 100
+        starSound.play()
         star.setX(-100)
 
     if banana_colide:
         temp = carro_player.sprite.image
         carro_player.rotate(temp, 45)
-        # print(carro_player.getY())
 
 
 # LOOP principal
@@ -129,18 +137,19 @@ while loop:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT and movimentoX <= 640:
                 movimentoX = movimentoX + 115
+                curve.play()
                 carro_player.setX(movimentoX)
 
             if event.key == pygame.K_LEFT and movimentoX >= 525:
                 movimentoX = movimentoX - 115
+                curve.play()
                 carro_player.setX(movimentoX)
             '''
             if event.key == pygame.K_UP:
                 movimentoy = movimentoy - 10
                 carro_player.setY(movimentoy)
             '''
-    # print(collision())
-    # star.setY(collision())
+
     valor = valor + carro_pista.getPos()
     valor2 = valor2 + carro_pista2.getPos()
     valor3 = valor3 + star.getPos()
